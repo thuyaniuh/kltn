@@ -213,4 +213,94 @@ class mTopic
             return $this->registerTopic($topicID, $date, $sinhvien1ID, $sinhvien2ID, $sinhvien1Name, $sinhvien2Name);
         }
     }
+    // Hàm quản lí đề tài của gv
+    function selectAllTopicByLecturerName($lecturer_name)
+    {
+        $p = new Connect();
+        $p->connectDB($con); // Kết nối cơ sở dữ liệu
+
+        // Sử dụng Prepared Statements để tránh lỗ hổng SQL injection
+        $query = "SELECT t.topic_name, u1.user_id AS student_1_id, u1.name AS student_1_name, u2.user_id AS student_2_id, u2.name AS student_2_name 
+        FROM topics t JOIN registration r ON t.topic_id = r.topic_id JOIN user u_proposer ON t.proposed_by = u_proposer.user_id LEFT JOIN user u1 ON r.student_1 = u1.user_id 
+        LEFT JOIN user u2 ON r.student_2 = u2.user_id WHERE u_proposer.user_id = (?)";
+        $stmt = $con->prepare($query);
+
+        // Kiểm tra nếu prepare() không thành công
+        if (!$stmt) {
+            return false;
+        }
+
+        // Bind parameters và thực thi truy vấn
+        $stmt->bind_param("s", $lecturer_name);
+        $execute_success = $stmt->execute();
+
+        // Kiểm tra kết quả thực thi
+        if ($execute_success === false) {
+            $p->close($con); // Đóng kết nối
+            return null;
+        } else {
+            $result_set = $stmt->get_result();
+            $topics = $result_set->fetch_all(MYSQLI_ASSOC); // Trả về tất cả kết quả dưới dạng mảng kết hợp
+
+            $stmt->close(); // Đóng statement
+            $p->close($con); // Đóng kết nối
+
+            return $topics;
+        }
+    }
+    //Nộp báo cáo
+    function submitReport($user_id, $report_file, $date)
+    {
+        $p = new Connect();
+        $p->connectDB($con); // Kết nối cơ sở dữ liệu
+
+        // Sử dụng Prepared Statements để tránh lỗ hổng SQL injection
+        $query = "INSERT INTO progress (user_id, report_file,submit_at) VALUES (?, ?, ?)";
+        $stmt = $con->prepare($query);
+
+        // Kiểm tra nếu prepare() không thành công
+        if (!$stmt) {
+            return false;
+        }
+
+        // Bind parameters và thực thi truy vấn
+        $stmt->bind_param("iss", $user_id, $report_file, $date);
+        $execute_success = $stmt->execute();
+
+        // Kiểm tra kết quả thực thi
+        if ($execute_success === false) {
+            $p->close($con); // Đóng kết nối
+            return false;
+        } else {
+            $stmt->close(); // Đóng statement
+            $p->close($con); // Đóng kết nối
+            return true;
+        }
+    }
+    // Xem báo cáo đã nộp
+    function getAllReports()
+    {
+        $p = new Connect();
+        $p->connectDB($con); // Kết nối cơ sở dữ liệu
+        $query = "SELECT * FROM progress";
+        $stmt = $con->prepare($query);
+        // Kiểm tra nếu prepare() không thành công
+        if (!$stmt) {
+            return false;
+        }
+        $execute_success = $stmt->execute();
+        // Kiểm tra kết quả thực thi
+        if ($execute_success === false) {
+            $p->close($con); // Đóng kết nối
+            return null;
+        } else {
+            $result_set = $stmt->get_result();
+            $reports = $result_set->fetch_all(MYSQLI_ASSOC); // Trả về tất cả kết quả dưới dạng mảng kết hợp
+
+            $stmt->close(); // Đóng statement
+            $p->close($con); // Đóng kết nối
+
+            return $reports;
+        }
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-session_start();
 $user_id = $_SESSION["user_id"];
 $major_id = $_SESSION["major_id"];
 // Kiểm tra xem phiên đăng nhập có tồn tại không
@@ -47,24 +46,6 @@ if (!isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand" href="dashboard.php"><img src="../IMG/Logo_IUH.png" alt="Logo" style="width: 50px;"></a>
-            <!-- Tên trang -->
-            <span class="navbar-text mx-3">Student Dashboard</span>
-            <!-- Avatar và dropdown menu -->
-            <div class="dropdown ms-auto">
-                <!-- Avatar -->
-                <img src="../IMG/thuyan.png" alt="Avatar" class="avatar" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Dropdown menu -->
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Change Password</a></li>
-                    <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <!-- --------------------------------------------------------------------------- -->
     <div class="fluid-container mt-5">
         <h4 class="text-center mb-4">Danh sách đề tài</h4>
@@ -166,6 +147,8 @@ if (isset($_REQUEST['btnRegister'])) {
     //     echo "<script>alert('Lỗi');</script>";
     // }
 }
+include_once("../Layout/footer.php");
 ?>
+
 
 </html>

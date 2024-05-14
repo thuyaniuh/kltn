@@ -33,6 +33,7 @@ class cTopic
             }
         }
     }
+    //Lấy danh sách đề tài theo người đề xuất
     function getAllTopicByMajor($major_id)
     {
         $p = new mTopic();
@@ -42,5 +43,23 @@ class cTopic
     {
         $p = new mTopic();
         return $p->checkRegistration($topicID, $studentID);
+    }
+    //Lấy danh sách đề tài theo người đề xuất
+    function getAllTopicByProposal($lecturer_name)
+    {
+        $p = new mTopic();
+        return $p->selectAllTopicByLecturerName($lecturer_name);
+    }
+    //Nộp báo cáo
+    function getSubmitReport($user_id, $report_file, $date)
+    {
+        $p = new mTopic();
+        return $p->submitReport($user_id, $report_file, $date);
+    }
+    //Xem báo cáo
+    function getAllReports()
+    {
+        $mReport = new mTopic();
+        return $mReport->getAllReports();
     }
 }

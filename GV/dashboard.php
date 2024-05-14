@@ -74,7 +74,6 @@ if ($_SESSION['role_id'] != 2) {
         </div>
     </nav>
     <!-- Main content -->
-    <!-- Main content -->
     <div class="container mt-5">
         <div class="row">
             <!-- Navbar bên trái -->
@@ -85,7 +84,10 @@ if ($_SESSION['role_id'] != 2) {
                             <a class="nav-link" href="dashboard.php?proposal">Đề xuất đề tài</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tiến độ thực hiện</a>
+                            <a class="nav-link" href="dashboard.php?report">Quản lí bài nộp</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.php?topicmanager">Quản lí đề tài</a>
                         </li>
                     </ul>
                 </div>
@@ -96,8 +98,12 @@ if ($_SESSION['role_id'] != 2) {
                 <?php
                 if (isset($_REQUEST['proposal'])) {
                     include_once 'viewproposal.php';
+                } elseif (isset($_REQUEST['topicmanager'])) {
+                    include_once 'viewTopicManager.php';
+                } elseif (isset($_REQUEST['report'])) {
+                    include_once 'viewReport.php';
                 } else {
-                    include 'viewInfor.php';
+                    include_once 'viewInfor.php';
                 }
                 ?>
                 <!-- Nội dung khác -->

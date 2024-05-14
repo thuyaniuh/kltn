@@ -51,10 +51,10 @@ if ($_SESSION['role_id'] != 1) {
                 <div class="navbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="viewTopic.php">Đăng kí đề tài</a>
+                            <a class="nav-link" href="dashboard.php?topic">Đăng kí đề tài</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tiến độ thực hiện</a>
+                            <a class="nav-link" href="dashboard.php?submitassigment">Tiến độ thực hiện</a>
                         </li>
                     </ul>
                 </div>
@@ -63,7 +63,13 @@ if ($_SESSION['role_id'] != 1) {
             <div class="col-md-9">
                 <!-- Thông tin sinh viên -->
                 <?php
-                include_once("viewInfor.php");
+                if (isset($_REQUEST['topic'])) {
+                    include_once 'viewTopic.php';
+                } elseif (isset($_REQUEST['submitassigment'])) {
+                    include_once 'viewSubmitReport.php';
+                } else {
+                    include_once 'viewInfor.php';
+                }
                 ?>
 
                 <!-- Nội dung khác -->
