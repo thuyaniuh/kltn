@@ -278,7 +278,7 @@ class mTopic
         }
     }
     // Xem báo cáo đã nộp
-    function getAllReports()
+    function selectAllReports()
     {
         $p = new Connect();
         $p->connectDB($con); // Kết nối cơ sở dữ liệu
@@ -301,6 +301,36 @@ class mTopic
             $p->close($con); // Đóng kết nối
 
             return $reports;
+        }
+    }
+    // 
+    function selectAllReportsByUser($user_id)
+    {
+        $p = new Connect();
+        $p->connectDB($con); // Kết nối cơ sở dữ liệu
+        $query = "SELECT * FROM progress where user_id=(?)";
+        $stmt = $con->prepare($query);
+
+        // Kiểm tra nếu prepare() không thành công
+        if (!$stmt) {
+            return false;
+        }
+        // Bind parameters và thực thi truy vấn
+        $stmt->bind_param("i", $user_id);
+        $execute_success = $stmt->execute();
+
+        // Kiểm tra kết quả thực thi
+        if ($execute_success === false) {
+            $p->close($con); // Đóng kết nối
+            return null;
+        } else {
+            $result_set = $stmt->get_result();
+            $topics = $result_set->fetch_all(MYSQLI_ASSOC); // Trả về tất cả kết quả dưới dạng mảng kết hợp
+
+            $stmt->close(); // Đóng statement
+            $p->close($con); // Đóng kết nối
+
+            return $topics;
         }
     }
 }

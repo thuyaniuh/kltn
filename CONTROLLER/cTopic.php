@@ -60,6 +60,12 @@ class cTopic
     function getAllReports()
     {
         $mReport = new mTopic();
-        return $mReport->getAllReports();
+        return $mReport->selectAllReports();
+    }
+    // Lấy thông tin nộp theo user_id
+    function getAllReportsByUser($user_id)
+    {
+        $mReport = new mTopic();
+        return $mReport->selectAllReportsByUser($user_id);
     }
 }
