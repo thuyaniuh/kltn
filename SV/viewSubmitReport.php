@@ -86,15 +86,33 @@
                         <td><label for='file_name'>Tên file:</label></td>
                         <td><input type='text' id='file_name' name='file_name' value='$file_name' disabled></td>
                     </tr>
-                </table>";
+                </table>               
+                <input type='submit' value='Sửa bài nộp' class='btn btn-success' name='btnEditReport'>";
                 }
+            } else {
+                $status = "Chưa nộp";
+                echo "<table style='width:100%' class='table table-striped'>
+                    <tr>
+                        <td><label for='status'>Trạng thái:</label></td>
+                        <td><input type='text' id='status' name='status' value='$status' disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label for='submit_time'>Thời gian nộp:</label></td>
+                        <td><input type='text' id='submit_time' name='submit_time' value='' disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label for='file_name'>Tên file:</label></td>
+                        <td><input type='text' id='file_name' name='file_name' value='' disabled></td>
+                    </tr>
+                </table>               
+                <input type='submit' value='Nộp bài' class='btn btn-success' name='btnSubmitReport'>";
             }
         }
 
         ?>
 
         <!-- Nút submit -->
-        <input type="submit" value="Nộp bài" class="btn btn-success" name="btnSubmitReport">
+
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
